@@ -14,19 +14,13 @@ class Solution:
         r = n - 1 #right idx 2
         u = m - 1 #up idx 2
         
-        while l <= r and d <= u:
+        while l <= r and d <= u: # has to be <= or >= or it will not get last values
 
             # l = 0, r = 2, d = 0, u = 2
             for i in range(l, r + 1): #range(0,3) aka 0, 1, 2
                 res.append(matrix[d][i]) #1,2,3, going right
             
             d += 1 #d is 1 now, going down
-            
-            # l = 1, r = 1, d = 1, u = 1 
-            #range(1,2) aka 1
-            #matrix[1][1] aka 5 is appended
-            #d becomes 2
-            # l = 1, r = 1, d = 2, u = 1 
 
             # l = 0, r = 2, d = 1, u = 2
             for i in range(d, u + 1): #range(1,3) aka 1, 2
@@ -38,7 +32,12 @@ class Solution:
             #the + 1 is to make sure the range's end is valid
             if not d < u + 1 or not l < r + 1:
                 break            
-                        
+           
+        #IMPORTANT!!! Line 33 needs to be OR, not AND
+        #it will continue after final value if it's AND
+        #we just need to stop as soon as 1 pair of boundaries
+        #have been reached, NOT both
+        
             # l = 0, r = 1, d = 1, u = 2
             for i in range(r, l - 1, -1): #range(1,-1,-1) aka 1, 0
                 res.append(matrix[u][i]) #8,7, going left
@@ -53,12 +52,6 @@ class Solution:
             # l = 1, r = 1, d = 1, u = 1  
             
         return res
-            
-        
-        #[1,2,3,4,8,12,11,10,9,5,6,7,6] it keeps getting 6, why?
-        #[1,2,3,4,8,12,11,10,9,5,6,7]
-        
-        
         
         
         #r coordinate, c coordinate
