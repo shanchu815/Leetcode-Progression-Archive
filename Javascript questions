@@ -5,29 +5,30 @@
 //made up of round brackets. If it was already matching, the
 //function should just return 0.
 
-function removeBrackets(str){
+function removeBrackets(str) {
     let stack = [];
     let count = 0;
-        
-    for (i = 0; i < str.length; i++){
-        let char = stack[stack.length - 1];
-        
+  
+    for (let i = 0; i < str.length; i++) {
         if (str[i] == "(") {
             stack.push(str[i]);
-        } else if ((str[i] == ")" && char == "(")) {
-            stack.pop();
-        } else {
-            count += 1;
-            stack.pop();
+        } else if (str[i] == ")") {
+            if (stack.length > 0 && stack[stack.length-1] == "(") {
+                stack.pop();
+            } else {
+                count++;
+            }
         }
     }
-    return count;
+  
+    return count + stack.length;
 }
 
 console.log(removeBrackets("()()")); // 0
 console.log(removeBrackets("()))")); // 2
 console.log(removeBrackets("(()))")); // 1
 console.log(removeBrackets("))(()))")); // 3
+
 
 //Question that asks you to return a new string consisting of
 //the characters of an input string that need to be removed
