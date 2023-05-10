@@ -1,0 +1,74 @@
+//Question that asks you to to return the number of round brackets
+//to remove from a string of round brackets until the string only
+//has matching round brackets.
+//input parameters will always guarantee that the string can be
+//made up of round brackets. If it was already matching, the
+//function should just return 0.
+
+function removeBrackets(str){
+    let stack = [];
+    let count = 0;
+        
+    for (i = 0; i < str.length; i++){
+        let char = stack[stack.length - 1];
+        
+        if (str[i] == "(") {
+            stack.push(str[i]);
+        } else if ((str[i] == ")" && char == "(")) {
+            stack.pop();
+        } else {
+            count += 1;
+            stack.pop();
+        }
+    }
+    return count;
+}
+
+console.log(removeBrackets("()()")); // 0
+console.log(removeBrackets("()))")); // 2
+console.log(removeBrackets("(()))")); // 1
+console.log(removeBrackets("))(()))")); // 3
+
+//Question that asks you to return a new string consisting of
+//the characters of an input string that need to be removed
+//from it in order for the input string to be a palindrome.
+//You can't remove more than 2 characters from the input string
+//& the length of the input string after losing those characters
+//has to be at least 3 characters long.
+//The function should return the string "not possible" if you
+//can't meet those parameters.
+
+function makePalindrome(str) {
+    
+    function isPalindrome(str) {
+        for (let i = 0, j = str.length - 1; i < j; i++, j--) {
+            if (str[i] !== str[j]) {
+            return false;
+            }
+        }
+        return true;
+    }
+
+    if (str.length <= 3) {
+        return "not possible";
+    }
+  
+    for (let start = 0; start < str.length - 1; start++) {
+        for (let end = start + 1; end < str.length; end++) {
+            let removed = str.slice(start, end);
+            let remaining = str.slice(0, start) + str.slice(end);
+            if (isPalindrome(remaining) && removed.length < 3) {
+                return removed;
+            }
+        }
+    }
+  
+    return "not possible";
+}
+
+console.log(makePalindrome("moqlwm")); //not possible
+console.log(makePalindrome("mqm")); //not possible
+console.log(makePalindrome("mql")); //not possible
+console.log(makePalindrome("moqwm")); //oq
+console.log(makePalindrome("mqowm")); //qo
+console.log(makePalindrome("moqm")); //o
