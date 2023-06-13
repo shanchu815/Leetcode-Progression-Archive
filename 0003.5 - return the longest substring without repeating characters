@@ -1,0 +1,41 @@
+# this is about returning the substring itself and not the length of the longest substring from a string
+
+# the formula is similar to 0003-longest-substring-without-repeating-characters
+# however we need to keep track of the indices of the substring and update them
+
+def longest_unique_string(s):
+
+  if len(s) == 0: 
+    return ""
+
+  L = 0
+  R = 1
+  idxs = (0, 1)
+  letters = {s[0]}
+
+  while R < len(s):
+    if s[R] in letters:
+      letters.remove(s[L])
+      L += 1
+    else:
+      letters.add(s[R])
+      R += 1
+    if R - L > idxs[1] - idxs[0]:
+      idxs = (L, R)
+
+  return s[idxs[0]:idxs[1]]
+  # return idxs[1] - idxs[0]
+
+# we can change line 26 to 27 to get the length of the longest substring instead
+
+# remember that while "abc" is indices 0 to 2 in "abcabcbb",
+# the right index for slicing is exlusive
+# so our function would give us L = 0, R = 3, idxs = (0, 3)
+# and s[0:3] would give us characters from 0 to 2 aka "abc"
+
+A = "abcabcbb" #"abc", 3 (desired answers)
+B = "ffff" #"f", 1 (desired answers)
+C = "pwwkew" #"wke", 3 (desired answers)
+print(longest_unique_string(A))
+print(longest_unique_string(B))
+print(longest_unique_string(C))
